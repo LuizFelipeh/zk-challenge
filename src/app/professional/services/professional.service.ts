@@ -8,7 +8,7 @@ const lorenIpsum = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ves
 
 const mockProfessional = {
   id: 1,
-  profileUrl: 'https://movimentoblackmoney.com.br/wp-content/uploads/2018/04/epsy-campbell-barr-1024x683.jpg',
+  profileUrl: 'https://financasfemininas.com.br/wp-content/uploads/2016/11/dia-da-consciencia-negra-racismo-mulher-carreira-01.jpg',
   name: 'Sabrina',
   profession: 'Psicóloga',
   description: lorenIpsum,
@@ -25,22 +25,31 @@ const appointmentInfo = {
   duration: 50
 } as AppointmentInfo;
 
-const availabilityResponse = {
-  availabilities: [
-    new Date('8:00'),
-    new Date('9:00'),
-    new Date('10:00'),
-    new Date('11:00'),
-    new Date('12:00'),
-    new Date('13:00'),
-    new Date('14:00'),
-    new Date('15:00'),
-    new Date('16:00'),
-    new Date('17:00'),
-    new Date('18:00'),
-    new Date('19:00')
-  ]
-} as Availabilities;
+const getDate = (date: Date, hour: number): Date => {
+  let copiedDate = new Date(date);
+  copiedDate.setHours(hour);
+  copiedDate.setMinutes(0);
+  return copiedDate;
+};
+
+const availabilityResponse = (date: Date): Availabilities => {
+  return {
+    availabilities: [
+      getDate(date, 8),
+      getDate(date, 9),
+      getDate(date, 10),
+      getDate(date, 11),
+      getDate(date, 12),
+      getDate(date, 13),
+      getDate(date, 14),
+      getDate(date, 15),
+      getDate(date, 16),
+      getDate(date, 17),
+      getDate(date, 18),
+      getDate(date, 19)
+    ]
+  };
+};
 
 @Injectable({
   providedIn: 'root'
@@ -58,6 +67,6 @@ export class ProfessionalService {
   }
 
   getAvailabities(id: number, date: Date): Observable<Availabilities> {
-    return of(availabilityResponse);
+    return of(availabilityResponse(date));
   }
 }

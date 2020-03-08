@@ -11,3 +11,12 @@
     >
   </button>
 </div>
+
+<div class="availabilities">
+  <ng-container *ngFor="let date of activeDates">
+    <ng-container
+      *ngFor="let availability of (dateAvailabilities(date) | async)">
+      {{ availability }}<br>
+    </ng-container>
+  </ng-container>
+</div>

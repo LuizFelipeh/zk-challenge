@@ -3,19 +3,28 @@
     <img [src]="professional.profileUrl" class="image" alt="{{professional.name}} profile photo">
   </picture>
 
-  <section>
+  <section class="section-info">
     <h1 class="name">{{professional.name}}</h1>
-    <a
-      [routerLink]="['/search', professional.profession | lowercase]"
-      class="profession">
-      {{professional.profession}}
-    </a> | <span>{{professional.addressCity}}</span>
-    {{professional.rating}} <span class="review">({{professional.review_count}} {{ 'shared.reviews' | translate }})</span>
-    <span class="price">{{ appointmentInfo.price.value | currency:appointmentInfo.price.currency:'symbol-narrow':'1.0-0' }}</span> /
-    <span class="duration"> {{ appointmentInfo.duration }} {{ 'shared.minutes' | translate }} </span>
+    <div>
+      <a
+        [routerLink]="['/search', professional.profession | lowercase]"
+        class="profession">
+        {{ professional.profession | uppercase }}
+      </a> | <span>{{professional.addressCity}}</span>
+    </div>
+
+    <div>
+      {{professional.rating}} <span class="review">({{professional.review_count}} {{ 'shared.reviews' | translate }})</span>
+    </div>
+
+    <div>
+      <span class="price">{{ appointmentInfo.price.value | currency:appointmentInfo.price.currency:'symbol-narrow':'1.0-0' }}</span>
+       /
+      <span class="duration"> {{ appointmentInfo.duration }} {{ 'shared.minutes' | translate }} </span>
+    </div>
   </section>
 
-  <section>
+  <section class="section-description">
     <h2 class="description">
       {{ professional.description }}
     </h2>

@@ -1,5 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ProfessionalService } from '../services/professional.service';
+import { Observable } from 'rxjs';
+import { Availabilities } from 'src/app/models/availabilities';
+import { map } from 'rxjs/operators';
 
 const day = 1000 * 60 * 60 * 24;
 
@@ -29,6 +32,14 @@ export class ProfessionalAvailabilitiesComponent implements OnInit {
       this.addDaysToDate(this.today, 1),
       this.addDaysToDate(this.today, 2)
     ];
+  }
+
+  public dateAvailabilities(date: Date): Observable<Date[]> {
+    return this.professionalService
+      .getAvailabities(this.professionalId, date)
+      .pipe(
+        map(({ availabilities }) => availabilities)
+      );
   }
 
   public previousDates(): void {
