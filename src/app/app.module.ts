@@ -3,16 +3,21 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { InfoComponent } from './professional/info/info.component';
+import {TranslateModule} from '@ngx-translate/core';
+
+import { registerLocaleData } from '@angular/common';
+import pt from '@angular/common/locales/pt';
+
+registerLocaleData(pt, 'pt-br');
 
 @NgModule({
   declarations: [
-    AppComponent,
-    InfoComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    TranslateModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

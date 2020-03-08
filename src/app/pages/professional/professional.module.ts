@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { ProfessionalComponent } from './professional.component';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
@@ -8,11 +7,9 @@ import { RouterModule } from '@angular/router';
     CommonModule,
     RouterModule.forChild([{
       path: ':id',
-      component: ProfessionalComponent
+      loadChildren: () => import('./professional-profile/professional-profile.module')
+        .then(m => m.ProfessionalPageModule)
     }])
-  ],
-  declarations: [
-    ProfessionalComponent
   ]
 })
 export class ProfessionalPageModule { }

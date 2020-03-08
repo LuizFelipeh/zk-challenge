@@ -1,8 +1,11 @@
-import { Appointment } from './appointment';
-
 export interface Professional {
+  id: number;
   profileUrl: string;
   name: string;
   profession: string;
-  appointment: AppointmentInfo;
+  description: string;
+  addressCity: string;
+
+  rating: number;
+  review_count: number;
 }

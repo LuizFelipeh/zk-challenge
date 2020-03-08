@@ -1,6 +1,6 @@
-export interface Appointment {
-  price: number;
-  currency: string;
-  // Minutes
-  duration: number;
+import { Price } from './price';
+
+export interface AppointmentInfo {
+  price: Price;
+  duration: number; // Minutes
 }
