@@ -1,0 +1,13 @@
+<div class="dates">
+  <button (click)="previousDates()">
+    <
+  </button>
+
+  <ng-container *ngFor="let date of activeDates">
+    {{ date | date:'short'}}
+  </ng-container>
+
+  <button (click)="nextDates()">
+    >
+  </button>
+</div>
