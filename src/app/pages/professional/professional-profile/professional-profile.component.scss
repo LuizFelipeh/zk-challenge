@@ -1,0 +1,11 @@
+.professional-profile {
+  display: flex;
+  padding: 96px;
+
+  .section-professional-info {}
+
+  .section-professional-availabilities {
+    flex-shrink: 0;
+    margin-left: 24px;
+  }
+}

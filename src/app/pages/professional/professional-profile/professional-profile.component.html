@@ -1,11 +1,17 @@
-<ng-container *ngIf="fetchedInfo$ | async as info">
-  <professional-info
-    [professional]="info.professional"
-    [appointmentInfo]="info.appointmentInfo">
-  </professional-info>
+<div class="professional-profile">
+  <ng-container *ngIf="fetchedInfo$ | async as info">
+    <section class="section-professional-info">
+      <professional-info
+        [professional]="info.professional"
+        [appointmentInfo]="info.appointmentInfo">
+      </professional-info>
+    </section>
 
-  <professional-availabilities
-    [professionalId]="professionalId">
-  </professional-availabilities>
-</ng-container>
+    <section class="section-professional-availabilities">
+      <professional-availabilities
+        [professionalId]="professionalId">
+      </professional-availabilities>
+    </section>
+  </ng-container>
+</div>
 
