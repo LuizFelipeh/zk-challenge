@@ -1,0 +1,11 @@
+<ng-container *ngIf="fetchedInfo$ | async as info">
+  <professional-info
+    [professional]="info.professional"
+    [appointmentInfo]="info.appointmentInfo">
+  </professional-info>
+
+  <professional-availabilities
+    [professionalId]="professionalId">
+  </professional-availabilities>
+</ng-container>
+
