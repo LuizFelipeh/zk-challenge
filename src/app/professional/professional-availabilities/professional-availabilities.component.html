@@ -1,22 +1,35 @@
-<div class="dates">
-  <button (click)="previousDates()">
-    <
-  </button>
+<div class="professional-availabilities">
+  <div class="title">
+    {{ 'professional.availabilities.title' | translate }}
+  </div>
 
-  <ng-container *ngFor="let date of activeDates">
-    {{ date | date:'short'}}
-  </ng-container>
+  <div class="dates">
+    <button (click)="previousDates()" [disabled]="activeDates[0].getTime() <= today.getTime()">
+      <
+    </button>
 
-  <button (click)="nextDates()">
-    >
-  </button>
-</div>
-
-<div class="availabilities">
-  <ng-container *ngFor="let date of activeDates">
-    <ng-container
-      *ngFor="let availability of (dateAvailabilities(date) | async)">
-      {{ availability }}<br>
+    <ng-container *ngFor="let date of activeDates">
+      <div class="date">
+        {{ date | date:'EEE'}}<br>
+        {{ date | date:'LLL dd' | uppercase }}
+      </div>
     </ng-container>
-  </ng-container>
+
+    <button (click)="nextDates()">
+      >
+    </button>
+  </div>
+
+  <div class="availabilities">
+    <ng-container *ngFor="let date of activeDates">
+      <div class="date-availabilities">
+        <ng-container
+          *ngFor="let availability of availabilities[date.toString()]">
+          <div class="availability" (click)="onAvailabilityClick(availability)">
+            {{ availability | date:'HH:mm'}}
+          </div>
+        </ng-container>
+      </div>
+    </ng-container>
+  </div>
 </div>

@@ -1,8 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ProfessionalService } from '../services/professional.service';
 import { Observable } from 'rxjs';
 import { Availabilities } from 'src/app/models/availabilities';
-import { map } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 
 const day = 1000 * 60 * 60 * 24;
 
@@ -14,10 +14,12 @@ const day = 1000 * 60 * 60 * 24;
 export class ProfessionalAvailabilitiesComponent implements OnInit {
 
   @Input() professionalId: number;
+  @Output() availabilityClick = new EventEmitter<Date>();
 
   public activeDates: Date[];
+  public today = new Date();
 
-  private today = new Date();
+  public availabilities: Record<string, Date[]> = {};
 
   constructor(private professionalService: ProfessionalService) { }
 
@@ -27,31 +29,49 @@ export class ProfessionalAvailabilitiesComponent implements OnInit {
 
   private setInitialDates(): void {
     this.activeDates = [
-      this.addDaysToDate(this.today, -1),
       this.today,
       this.addDaysToDate(this.today, 1),
-      this.addDaysToDate(this.today, 2)
+      this.addDaysToDate(this.today, 2),
+      this.addDaysToDate(this.today, 3)
     ];
+
+    this.activeDates.map((date: Date) => this.getDateAvailabilities(date));
   }
 
-  public dateAvailabilities(date: Date): Observable<Date[]> {
-    return this.professionalService
-      .getAvailabities(this.professionalId, date)
-      .pipe(
-        map(({ availabilities }) => availabilities)
-      );
+  // Cache
+  public getDateAvailabilities(date: Date): void {
+    if ( this.availabilities[date.toString()]) { return; }
+
+    this.professionalService
+    .getAvailabities(this.professionalId, date)
+    .pipe(
+      take(1),
+      map(({ availabilities }) => availabilities)
+    ).subscribe((availabilities: Date[]) =>
+      this.availabilities[date.toString()] = availabilities
+    );
   }
 
   public previousDates(): void {
     this.removeLastDate();
     const firstDate = this.activeDates[0];
-    this.activeDates.unshift(this.addDaysToDate(firstDate, -1));
+    const previousDate = this.addDaysToDate(firstDate, -1);
+
+    this.activeDates.unshift(previousDate);
+    this.getDateAvailabilities(previousDate);
   }
 
   public nextDates(): void {
     this.removeFirstDate();
     const lastDate = this.activeDates[this.activeDates.length - 1];
-    this.activeDates.push(this.addDaysToDate(lastDate, 1));
+    const nextDate = this.addDaysToDate(lastDate, 1);
+
+    this.activeDates.push(nextDate);
+    this.getDateAvailabilities(nextDate);
+  }
+
+  public onAvailabilityClick(date: Date) {
+    this.availabilityClick.emit(date);
   }
 
   private removeFirstDate(): void {

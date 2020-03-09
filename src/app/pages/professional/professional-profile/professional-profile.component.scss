@@ -1,11 +1,24 @@
 .professional-profile {
   display: flex;
-  padding: 96px;
-
-  .section-professional-info {}
+  max-width: 960px;
+  margin: auto;
 
   .section-professional-availabilities {
     flex-shrink: 0;
     margin-left: 24px;
+  }
+}
+
+@media only screen and (max-width: 850px) {
+  .professional-profile {
+    flex-wrap: wrap;
+
+    .section-professional-info {
+        width: 100%;
+    }
+
+    .section-professional-availabilities {
+      margin: auto;
+    }
   }
 }
