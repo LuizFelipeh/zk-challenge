@@ -1,10 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ProfessionalService } from '../services/professional.service';
-import { Observable } from 'rxjs';
-import { Availabilities } from 'src/app/models/availabilities';
 import { map, take } from 'rxjs/operators';
-
-const day = 1000 * 60 * 60 * 24;
+import { addDaysToDate } from 'src/app/utils/date';
 
 @Component({
   selector: 'professional-availabilities',
@@ -30,9 +27,9 @@ export class ProfessionalAvailabilitiesComponent implements OnInit {
   private setInitialDates(): void {
     this.activeDates = [
       this.today,
-      this.addDaysToDate(this.today, 1),
-      this.addDaysToDate(this.today, 2),
-      this.addDaysToDate(this.today, 3)
+      addDaysToDate(this.today, 1),
+      addDaysToDate(this.today, 2),
+      addDaysToDate(this.today, 3)
     ];
 
     this.activeDates.map((date: Date) => this.getDateAvailabilities(date));
@@ -55,7 +52,7 @@ export class ProfessionalAvailabilitiesComponent implements OnInit {
   public previousDates(): void {
     this.removeLastDate();
     const firstDate = this.activeDates[0];
-    const previousDate = this.addDaysToDate(firstDate, -1);
+    const previousDate = addDaysToDate(firstDate, -1);
 
     this.activeDates.unshift(previousDate);
     this.getDateAvailabilities(previousDate);
@@ -64,7 +61,7 @@ export class ProfessionalAvailabilitiesComponent implements OnInit {
   public nextDates(): void {
     this.removeFirstDate();
     const lastDate = this.activeDates[this.activeDates.length - 1];
-    const nextDate = this.addDaysToDate(lastDate, 1);
+    const nextDate = addDaysToDate(lastDate, 1);
 
     this.activeDates.push(nextDate);
     this.getDateAvailabilities(nextDate);
@@ -80,9 +77,5 @@ export class ProfessionalAvailabilitiesComponent implements OnInit {
 
   private removeLastDate(): void {
     this.activeDates.pop();
-  }
-
-  private addDaysToDate(date: Date, days: number) {
-    return new Date(date.getTime() + days * day);
   }
 }

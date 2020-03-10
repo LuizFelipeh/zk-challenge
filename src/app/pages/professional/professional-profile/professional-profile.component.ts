@@ -28,12 +28,14 @@ export class ProfessionalProfilePage implements OnInit {
   ngOnInit(): void {
     this.router.paramMap.pipe(take(1)).subscribe(params => {
       this.professionalId = parseInt(params.get(ID_PARAM));
+      if (!this.professionalId) { return; }
+
       this.loadProfessional(this.professionalId);
     });
   }
 
   // Depending on the specifications we could use combineLatest as well
-  private loadProfessional(id: number): void {
+  public loadProfessional(id: number): void {
     this.fetchedInfo$ = forkJoin(
       {
         professional: this.professionalService.get(id),
